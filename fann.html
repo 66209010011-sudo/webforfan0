@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>จ๊ะเอ๋ ♥ สำหรับพี่โอ๊ตของเค้าาา</title>
+  <style>
+    :root{ --bg:#fff6fb; --card:#ffffff; --accent:#ff4d6d; --muted:#6b6b6b }
+    *{box-sizing:border-box}
+    body{
+      font-family: "Sarabun", system-ui;
+      margin:0; background:linear-gradient(180deg,#fff6fb 0%, #fff 100%);
+      color:#2b2b2b; display:flex; align-items:center; justify-content:center;
+      min-height:100vh; padding:24px;
+    }
+    .card{
+      width:100%; max-width:420px; background:var(--card);
+      border-radius:18px; box-shadow:0 8px 30px rgba(0,0,0,0.08);
+      padding:28px; text-align:center;
+    }
+    h1{font-size:20px; margin:6px 0 12px}
+    p{margin:10px 0; color:var(--muted)}
+    .btn{
+      background:var(--accent); color:white;
+      padding:10px 16px; border-radius:12px; border:none;
+      font-weight:600; cursor:pointer;
+      box-shadow:0 6px 18px rgba(255,77,109,0.18);
+    }
+    .btn.ghost{
+      background:transparent; color:var(--accent);
+      border:2px solid rgba(255,77,109,0.12);
+    }
+    .hidden{display:none}
+    .heart-wrap{display:flex; justify-content:center; margin:18px 0}
+    .heart{width:84px; height:84px; cursor:pointer; transform-origin:center; transition:.18s;}
+    .heart.pulse{animation:pulse .65s ease}
+    @keyframes pulse{50%{transform:scale(1.12)}}
+    .flower{width:110px; margin:10px auto;}
+    .video-preview{width:100%; margin-top:12px; border-radius:12px; overflow:hidden;}
+    .footer-note{font-size:13px; color:#8a8a8a; margin-top:12px}
+    .confetti{pointer-events:none; position:fixed; left:0; top:0; width:100%; height:100%}
+    .confetti .piece{position:absolute; width:10px; height:14px; opacity:0.95}
+  </style>
+</head>
+
+<body>
+  <div class="card">
+
+    <!-- Step 1 -->
+    <div id="step-1">
+      <h1>จ๊ะเอ๋ แฟนทำอะไรอยู่อ่าา</h1>
+      <p>อยากรู้ว่าคิดถึงเค้าอยู่ไหม~</p>
+      <p>คิดถึงเค้าไหม ถ้าคิดถึงกดหัวใจเลยย</p>
+      <button class="btn" data-next="2">❤️</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="step-2" class="hidden">
+      <h1>กดหัวใจเลยย 💓</h1>
+      <div class="heart-wrap">
+        <div id="heart" class="heart">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 20s-7-4.35-9.2-7.09C-0.37 9.9 3.5 4 8.44 6.13 
+                     10.4 7.05 12 9 12 9s1.6-1.95 3.56-2.87C20.5 4 
+                     24.37 9.9 21.2 12.91 19 15.65 12 20 12 20z"
+                  fill="#FFBAC1" stroke="#FF4D6D" stroke-width="0.6"/>
+          </svg>
+        </div>
+      </div>
+      <div id="heart-count" style="font-weight:700;">ยังไม่มีใครกดเลย</div>
+
+      <button id="to-3" class="btn ghost" disabled data-next="3" style="margin-top:14px">
+        กดแล้วกดตรงนี้น้าา
+      </button>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="step-3" class="hidden">
+      <h1>เค้าคิดถึงแฟนเหมือนกันนน 💕</h1>
+      <p>แฟนยิ้มทีใจเค้าละลายเลยย</p>
+      <button class="btn" data-next="4" style="margin-top:12px">กดต่อน้าา 💕</button>
+    </div>
+
+    <!-- Step 4 -->
+    <div id="step-4" class="hidden">
+      <h1>เซอร์ไพรส์! 🎁</h1>
+      <p>คนอะไรหน้าเหมือนแมว น่ารักที่สุดในโลกเลยยย</p>
+      <img class="flower" src="กุหลาบ.jpg"><br>
+      <button class="btn" data-next="5" style="margin-top:12px">เค้ามีอีกอย่างจะให้ 🌸</button>
+    </div>
+
+    <!-- Step 5 (วิดีโอที่เราใส่เอง) -->
+<div id="step-5" class="hidden">
+  <h1>สุดท้ายแล้วว 🎬💗</h1>
+
+ <video controls autoplay playsinline style="width:100%; border-radius:12px" muted>
+  <source src="9b7fb5d78f8f95d01378fe7cd3cbb947.mp4" type="video/mp4">
+</video>
+
+
+  <p class="footer-note">รักแฟนน้าา 💗</p>
+</div>
+
+
+  </div>
+
+  <div id="confetti" class="confetti"></div>
+
+<script>
+  // Step system
+  document.querySelectorAll('[data-next]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      showStep(btn.getAttribute('data-next'));
+    });
+  });
+
+  function showStep(n){
+    for(let i=1;i<=5;i++){
+      const s=document.getElementById('step-'+i);
+      if(s) s.classList.add('hidden');
+    }
+    document.getElementById('step-'+n).classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // Heart animation
+  let heartCount=0;
+  const heart=document.getElementById('heart');
+  const heartCountEl=document.getElementById('heart-count');
+  const to3=document.getElementById('to-3');
+
+  heart.addEventListener('click',()=>{
+    heartCount++;
+    heart.classList.add('pulse');
+    setTimeout(()=>heart.classList.remove('pulse'),700);
+
+    heartCountEl.textContent = heartCount+" คนส่งหัวใจแล้ว 💖";
+    to3.disabled=false;
+    burstConfetti(22);
+  });
+
+  // Confetti
+  function rand(a,b){return Math.random()*(b-a)+a}
+  function burstConfetti(n){
+    const box=document.getElementById('confetti');
+    for(let i=0;i<n;i++){
+      const div=document.createElement('div');
+      div.className='piece';
+      div.style.left=rand(10,90)+'%';
+      div.style.top=rand(10,40)+'%';
+      div.style.background=['#ff6b81','#ffd166','#8bd3ff','#c3f584','#ffb3d2'][Math.floor(rand(0,5))];
+      div.style.width=rand(6,12)+'px';
+      div.style.height=rand(8,18)+'px';
+      box.appendChild(div);
+
+      const anim=div.animate([
+        {transform:'translateY(0)',opacity:1},
+        {transform:'translateY('+rand(400,900)+'px)',opacity:0}
+      ],{duration:rand(900,1700)});
+      anim.onfinish=()=>div.remove();
+    }
+  }
+
+  showStep(1);
+</script>
+
+</body>
+</html>
